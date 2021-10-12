@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283852fc36294f859e9f58f332c4ab76, type: 3}
+  m_Name: Numbers
+  m_EditorClassIdentifier: 
+  _one: {fileID: 7763317227058749488, guid: f1cc8f2255888c746b862fcb84d5b9fa, type: 3}
+  _two: {fileID: 3801633002991994057, guid: 36a56e8884780c14f82b471fc02ad4aa, type: 3}
+  _three: {fileID: 7499824956092738360, guid: 619119ddf1be95443b62c559e33efd9a, type: 3}
+  _four: {fileID: 986198896156761350, guid: 3b59c0a6af4ff9746af4f7006ec576bb, type: 3}
+  _five: {fileID: 7130005726870289894, guid: 9f871e0ac48ad634f8f9e00c184479e9, type: 3}
+  _six: {fileID: 4262444965287341788, guid: 57b8aacf88f205b46a596cbbd76b7172, type: 3}
+  _seven: {fileID: 79862758188399962, guid: 84eb936ba0633ad499008f5a544351bb, type: 3}
+  _eight: {fileID: 1837227116714686823, guid: f4bfa1802ee89b94e9d2c5d58bf291fa, type: 3}
+  _nine: {fileID: 216252819194182568, guid: 379f36b1182f03448adfadd9a3163fa1, type: 3}
+  _zero: {fileID: 2086889746898626569, guid: 490ed76f0da5d9f46a330ecf8c17f9d6, type: 3}

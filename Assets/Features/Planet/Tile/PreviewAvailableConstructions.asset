@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f0d1cac9de4c048c26ba5ade29b3ad, type: 3}
+  m_Name: PreviewAvailableConstructions
+  m_EditorClassIdentifier: 
+  Forest: {fileID: 0}
+  City: {fileID: 2211735837950718654, guid: 7d2abdf4f4f9b0840838266751a00019, type: 3}
+  Ocean: {fileID: 0}
