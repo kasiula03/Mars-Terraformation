@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class CityController : MonoBehaviour
+public class CityController : MonoBehaviour, BuildingAction
 {
 	[SerializeField] private Transform _coin;
 
 	private PlayerResources _playerResources;
-	public bool IsCoinToCollect => _coinToCollect > 0;
+
 	private int _coinToCollect = 1;
-	
+
 	private void Start()
 	{
 		_playerResources = FindObjectOfType<PlayerResources>();
@@ -17,10 +17,15 @@ public class CityController : MonoBehaviour
 	//TODO: Is player in the city?
 	private void Update()
 	{
-		_coin.gameObject.SetActive(IsCoinToCollect);
+		_coin.gameObject.SetActive(IsActionAvailable());
 	}
 
-	public void CollectCoin()
+	public bool IsActionAvailable()
+	{
+		return _coinToCollect > 0;
+	}
+
+	public void Execute()
 	{
 		_playerResources.AddResource(PlayerResources.Currency.GOLD, _coinToCollect);
 		_coinToCollect = 0;

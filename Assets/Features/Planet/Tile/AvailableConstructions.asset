@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32f0d1cac9de4c048c26ba5ade29b3ad, type: 3}
   m_Name: AvailableConstructions
   m_EditorClassIdentifier: 
-  Forest: {fileID: 0}
+  Forest: {fileID: 4433843342179039910, guid: ac41e48ab27e76a41a84b575788c44a9, type: 3}
   City: {fileID: 2216573626151871534, guid: 415e11f4e14d5204d9e91cadb7ae19da, type: 3}
   Ocean: {fileID: 0}

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class PlayerResources : MonoBehaviour
 {
@@ -20,19 +19,26 @@ public class PlayerResources : MonoBehaviour
 		GOLD
 	}
 
+	public static readonly Dictionary<ConstructionType, (Currency, int)> ConstructionCosts = new Dictionary<ConstructionType, (Currency, int)>
+	{
+		{ConstructionType.CITY, (Currency.GOLD, 20)},
+		{ConstructionType.FOREST, (Currency.LEAVES, 8)},
+		{ConstructionType.OCEAN, (Currency.GOLD, 35)}
+	};
+
 	public Dictionary<Currency, int> Currencies = new Dictionary<Currency, int>()
 	{
-		{Currency.LEAVES, 0},
-		{Currency.HEATS, 0},
+		{Currency.LEAVES, 8},
+		{Currency.HEATS, 99},
 		{Currency.ENERGY, 0},
 		{Currency.STEEL, 0},
 		{Currency.TITAN, 0},
-		{Currency.GOLD, 12}
+		{Currency.GOLD, 21}
 	};
 	public Dictionary<Currency, int> CurrenciesIncome = new Dictionary<Currency, int>()
 	{
 		{Currency.LEAVES, 0},
-		{Currency.HEATS, 0},
+		{Currency.HEATS, 1},
 		{Currency.ENERGY, 0},
 		{Currency.STEEL, 0},
 		{Currency.TITAN, 0},
@@ -49,6 +55,12 @@ public class PlayerResources : MonoBehaviour
 		Currencies[currency] += value;
 		OnResourcesChanged?.Invoke();
 	}
+
+	public void AddResourceIncome(Currency currency, int increaseIncome)
+	{
+		CurrenciesIncome[currency] += increaseIncome;
+		OnResourcesChanged?.Invoke();
+	}
 	
 	public void AddResourcesByIncome()
 	{
@@ -57,5 +69,11 @@ public class PlayerResources : MonoBehaviour
 			Currencies[currency] += CurrenciesIncome[currency];
 		}
 		OnResourcesChanged?.Invoke();
+	}
+
+	public bool HasEnoughCurrency(ConstructionType constructionType)
+	{
+		(Currency, int) cost = ConstructionCosts[constructionType];
+		return Currencies[cost.Item1] >= cost.Item2;
 	}
 }
