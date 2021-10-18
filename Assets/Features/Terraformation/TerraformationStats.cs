@@ -22,4 +22,9 @@ public class TerraformationStats : MonoBehaviour
 	{
 		CurrentOxygenPercent += oxygen;
 	}
+
+	public void AddOcean(int ocean)
+	{
+		CurrentOceans += ocean;
+	}
 }

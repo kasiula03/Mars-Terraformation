@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Forest: {fileID: 4170824328305550846, guid: 33381b1388306424195ffe0c2758cde6, type: 3}
   City: {fileID: 2211735837950718654, guid: 7d2abdf4f4f9b0840838266751a00019, type: 3}
-  Ocean: {fileID: 0}
+  Ocean: {fileID: 4305766893857512829, guid: f1a3d45365c19ff4a8989cae05a4770f, type: 3}

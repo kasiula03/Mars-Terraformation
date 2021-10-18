@@ -3,128 +3,104 @@ using UnityEngine;
 
 public class ConstructorController : MonoBehaviour
 {
-	[SerializeField] private Transform _constructionPreviewParent;
-	[SerializeField] private AvailableConstructions _availableConstructions;
+    [SerializeField] private Transform _constructionPreviewParent;
+    [SerializeField] private AvailableConstructions _availableConstructions;
 
-	private ConstructionType _selectedConstruction = ConstructionType.NONE;
-	private ConstructionPlace _currentConstructionPlace;
-	private ConstructorPlace _currentConstructorPlace;
+    private ConstructionType _selectedConstruction = ConstructionType.NONE;
 
-	private GameObject _selectedPreviewObject;
-	private PlayerResources _playerResources;
-	private TerraformationStats _terraformationStats;
-	private BuildingAction _buildingAction;
+    private GameObject _selectedPreviewObject;
+    private PlayerResources _playerResources;
+    private TerraformationStats _terraformationStats;
 
-	public void Start()
-	{
-		_playerResources = FindObjectOfType<PlayerResources>();
-		_terraformationStats = FindObjectOfType<TerraformationStats>();
-	}
+    private readonly ObjectOnPlace<ConstructionPlace> _constructionPlace = new ObjectOnPlace<ConstructionPlace>(
+        "ConstructionPlace", OnEnterConstructionPlace, OnExitConstructionPlace);
 
-	private void Update()
-	{
-		if (_selectedConstruction != ConstructionType.NONE && _currentConstructionPlace &&
-		    _currentConstructionPlace.IsEmpty && Input.GetKeyDown(KeyCode.Space))
-		{
-			AdjustCurrency(_selectedConstruction);
-			_currentConstructionPlace.Build(_selectedConstruction);
-			Destroy(_selectedPreviewObject);
-			_selectedConstruction = ConstructionType.NONE;
-			//TODO: -currency
-		}
+    private readonly ObjectOnPlace<ConstructorPlace> _constructorPlace =
+        new ObjectOnPlace<ConstructorPlace>("ConstructorPlace");
 
-		if (_currentConstructorPlace && Input.GetKeyDown(KeyCode.Space) && CanConstruct(_currentConstructorPlace))
-		{
-			SelectToConstruct();
-		}
+    public void Start()
+    {
+        _playerResources = FindObjectOfType<PlayerResources>();
+        _terraformationStats = FindObjectOfType<TerraformationStats>();
+    }
 
-		//TODO: Another controller
-		if (_buildingAction != null && _buildingAction.IsActionAvailable() && Input.GetKeyDown(KeyCode.Space))
-		{
-			_buildingAction.Execute();
-		}
-	}
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (_constructorPlace.IsOnPlace && CanConstruct(_constructorPlace.Object))
+            {
+                SelectToConstruct();
+            }
+            else if (_selectedConstruction != ConstructionType.NONE && _constructionPlace.IsOnPlace &&
+                     _constructionPlace.Object.IsAbleToBuild(_selectedConstruction))
+            {
+                AdjustCurrency(_selectedConstruction);
+                _constructionPlace.Object.Build(_selectedConstruction);
+                Destroy(_selectedPreviewObject);
+                _selectedConstruction = ConstructionType.NONE;
+            }
+        }
+    }
 
-	private bool CanConstruct(ConstructorPlace constructorPlace)
-	{
-		ConstructionType constructionType = constructorPlace.ConstructionType;
-		return _playerResources.HasEnoughCurrency(constructionType);
-	}
+    private bool CanConstruct(ConstructorPlace constructorPlace)
+    {
+        ConstructionType constructionType = constructorPlace.ConstructionType;
+        return _playerResources.HasEnoughCurrency(constructionType);
+    }
 
-	private void AdjustCurrency(ConstructionType selectedConstruction)
-	{
-		if (selectedConstruction == ConstructionType.CITY)
-		{
-			_playerResources.AddResource(PlayerResources.Currency.GOLD, -20);
-			_playerResources.AddResourceIncome(PlayerResources.Currency.GOLD, 1);
-		}
+    private void AdjustCurrency(ConstructionType selectedConstruction)
+    {
+        _playerResources.DecreaseResourceByConstruction(selectedConstruction);
 
-		if (selectedConstruction == ConstructionType.FOREST)
-		{
-			_playerResources.AddResource(PlayerResources.Currency.LEAVES, -8);
-			_terraformationStats.AddOxygen(1);
-		}
-	}
+        if (selectedConstruction == ConstructionType.CITY)
+        {
+            _playerResources.AddResourceIncome(PlayerResources.Currency.GOLD, 1);
+        }
 
-	private void SelectToConstruct()
-	{
-		_selectedConstruction = _currentConstructorPlace.ConstructionType;
-		GameObject prefab = _availableConstructions.GetPrefab(_selectedConstruction);
-		_selectedPreviewObject = Instantiate(prefab, _constructionPreviewParent);
-	}
+        if (selectedConstruction == ConstructionType.FOREST)
+        {
+            _terraformationStats.AddOxygen(1);
+        }
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if (other.CompareTag("ConstructionPlace"))
-		{
-			if (_currentConstructionPlace != null)
-			{
-				ClearConstructionSelection();
-			}
+        if (selectedConstruction == ConstructionType.OCEAN)
+        {
+            _terraformationStats.AddOcean(1);
+        }
+    }
 
-			_currentConstructionPlace = other.GetComponent<ConstructionPlace>();
-			if (_currentConstructionPlace.IsEmpty)
-			{
-				_currentConstructionPlace.StartConstruction();
-			}
-		}
+    private void SelectToConstruct()
+    {
+        _selectedConstruction = _constructorPlace.Object.ConstructionType;
+        GameObject prefab = _availableConstructions.GetPrefab(_selectedConstruction);
+        _selectedPreviewObject = Instantiate(prefab, _constructionPreviewParent);
+    }
 
-		if (other.CompareTag("ConstructorPlace"))
-		{
-			_currentConstructorPlace = other.GetComponent<ConstructorPlace>();
-		}
+    private void OnTriggerEnter(Collider other)
+    {
+        _constructionPlace.CheckEnter(other);
+        _constructorPlace.CheckEnter(other);
+    }
 
-		if (other.CompareTag("BuildingAction"))
-		{
-			_buildingAction = other.GetComponent<BuildingAction>();
-		}
-	}
+    private void OnTriggerExit(Collider other)
+    {
+        _constructionPlace.CheckExit(other);
+        _constructorPlace.CheckExit(other);
+    }
 
-	private void OnTriggerExit(Collider other)
-	{
-		if (other.CompareTag("ConstructionPlace") && _currentConstructionPlace != null &&
-		    other.gameObject == _currentConstructionPlace.gameObject)
-		{
-			ClearConstructionSelection();
-		}
+    private static void OnEnterConstructionPlace(ConstructionPlace constructionPlace)
+    {
+        if (constructionPlace.IsEmpty)
+        {
+            constructionPlace.StartConstruction();
+        }
+    }
 
-		if (other.CompareTag("ConstructorPlace"))
-		{
-			_currentConstructorPlace = null;
-		}
-
-		if (other.CompareTag("BuildingAction"))
-		{
-			_buildingAction = null;
-		}
-	}
-
-	private void ClearConstructionSelection()
-	{
-		if (_currentConstructionPlace.IsEmpty)
-		{
-			_currentConstructionPlace.StopConstruction();
-			_currentConstructionPlace = null;
-		}
-	}
+    private static void OnExitConstructionPlace(ConstructionPlace constructionPlace)
+    {
+        if (constructionPlace.IsEmpty)
+        {
+            constructionPlace.StopConstruction();
+        }
+    }
 }

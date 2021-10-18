@@ -33,7 +33,7 @@ public class PlayerResources : MonoBehaviour
 		{Currency.ENERGY, 0},
 		{Currency.STEEL, 0},
 		{Currency.TITAN, 0},
-		{Currency.GOLD, 21}
+		{Currency.GOLD, 61}
 	};
 	public Dictionary<Currency, int> CurrenciesIncome = new Dictionary<Currency, int>()
 	{
@@ -60,6 +60,12 @@ public class PlayerResources : MonoBehaviour
 	{
 		CurrenciesIncome[currency] += increaseIncome;
 		OnResourcesChanged?.Invoke();
+	}
+
+	public void DecreaseResourceByConstruction(ConstructionType constructionType)
+	{
+		(Currency, int) cost = ConstructionCosts[constructionType];
+		Currencies[cost.Item1] -= cost.Item2;
 	}
 	
 	public void AddResourcesByIncome()
