@@ -20,6 +20,6 @@ public class ForestCreatorController : MonoBehaviour
 		int leafAmount = _playerResources.Currencies[PlayerResources.Currency.LEAVES];
 		_leafAmount.Create(leafAmount, Color.green);
 		int leafIncome = _playerResources.CurrenciesIncome[PlayerResources.Currency.LEAVES];
-		_leafIncome.Create(leafIncome, Color.green);
+		_leafIncome.Create(leafIncome, Color.green, true);
 	}
 }

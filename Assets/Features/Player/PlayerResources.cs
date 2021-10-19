@@ -29,7 +29,7 @@ public class PlayerResources : MonoBehaviour
 	public Dictionary<Currency, int> Currencies = new Dictionary<Currency, int>()
 	{
 		{Currency.LEAVES, 8},
-		{Currency.HEATS, 99},
+		{Currency.HEATS, 199},
 		{Currency.ENERGY, 0},
 		{Currency.STEEL, 0},
 		{Currency.TITAN, 0},
@@ -66,6 +66,7 @@ public class PlayerResources : MonoBehaviour
 	{
 		(Currency, int) cost = ConstructionCosts[constructionType];
 		Currencies[cost.Item1] -= cost.Item2;
+		OnResourcesChanged?.Invoke();
 	}
 	
 	public void AddResourcesByIncome()

@@ -13,6 +13,9 @@ public class NumberPrefabs : ScriptableObject
 	[SerializeField] private GameObject _eight;
 	[SerializeField] private GameObject _nine;
 	[SerializeField] private GameObject _zero;
+	[SerializeField] private GameObject _minus;
+	[SerializeField] private GameObject _plus;
+	
 
 	public GameObject GetPrefab(int number)
 	{
@@ -41,6 +44,10 @@ public class NumberPrefabs : ScriptableObject
 			default:
 				return null;
 		}
-	} 
-	
+	}
+
+	public GameObject GetSignPrefab(bool plus)
+	{
+		return plus ? _plus : _minus;
+	}
 }

@@ -42,7 +42,8 @@ public class ConstructionPlace : MonoBehaviour
 
     public bool IsAbleToBuild(ConstructionType constructionType)
     {
-        return IsEmpty && (constructionType == ConstructionType.OCEAN && _oceanSpot);
+        return IsEmpty && ((constructionType == ConstructionType.OCEAN && _oceanSpot) ||
+                           (constructionType != ConstructionType.OCEAN && !_oceanSpot));
     }
 
     public void Build(ConstructionType constructionType)
