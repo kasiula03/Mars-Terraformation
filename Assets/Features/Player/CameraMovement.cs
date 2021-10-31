@@ -25,15 +25,6 @@ public class CameraMovement : MonoBehaviour
             newTransform += transform.up * -Input.GetAxis("Mouse Y");
             transform.position = newTransform;
         }
-
-        /* Vector3 desiredPosition = _target.transform.position + offset;
-         Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, 0.125f);
-         transform.position = smoothedPosition;
-         transform.LookAt(_target.transform);*/
-
-        float oSize = _camera.orthographicSize;
-        oSize += Input.GetAxis("Mouse ScrollWheel") * -_sensivity;
-        oSize = Mathf.Clamp(oSize, 1f, 100);
-        _camera.orthographicSize = oSize;
+        
     }
 }

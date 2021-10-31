@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 824947687249801890}
   - component: {fileID: 824947687249801919}
   - component: {fileID: 2350049232015503576}
+  - component: {fileID: 1395070572}
+  - component: {fileID: 1395070580}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -115,7 +117,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &824947687249801919
 MonoBehaviour:
@@ -147,6 +149,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _constructionPreviewParent: {fileID: 5305937229422849071}
   _availableConstructions: {fileID: 11400000, guid: 6be6e6a04ca75e943a59d6b2b565b0f3, type: 2}
+--- !u!114 &1395070572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824947687249801893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad3104169d341f6892d8b12c51ef618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayNightCycle: {fileID: 0}
+--- !u!114 &1395070580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 824947687249801893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 323b9b7b373343c9b3be8226f509dc33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3543013552022077150
 GameObject:
   m_ObjectHideFlags: 0
