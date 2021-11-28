@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CityController : MonoBehaviour, BuildingAction
@@ -20,12 +21,17 @@ public class CityController : MonoBehaviour, BuildingAction
 		_coin.gameObject.SetActive(IsActionAvailable());
 	}
 
+	public bool IsBlocking()
+	{
+		return false;
+	}
+
 	public bool IsActionAvailable()
 	{
 		return _coinToCollect > 0;
 	}
 
-	public void Execute()
+	public void Execute(Action endAction)
 	{
 		_playerResources.AddResource(PlayerResources.Currency.GOLD, _coinToCollect);
 		_coinToCollect = 0;

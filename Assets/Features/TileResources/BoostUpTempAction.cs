@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BoostUpTempAction : MonoBehaviour, BuildingAction
@@ -10,13 +11,18 @@ public class BoostUpTempAction : MonoBehaviour, BuildingAction
         _terraformationStats = FindObjectOfType<TerraformationStats>();
         _playerResources = FindObjectOfType<PlayerResources>();
     }
+    
+    public bool IsBlocking()
+    {
+        return false;
+    }
 
     public bool IsActionAvailable()
     {
         return _playerResources.Currencies[PlayerResources.Currency.HEATS] >= 8;
     }
 
-    public void Execute()
+    public void Execute(Action endAction)
     {
         _terraformationStats.AddTemp(2);
         _playerResources.AddResource(PlayerResources.Currency.HEATS, -8);

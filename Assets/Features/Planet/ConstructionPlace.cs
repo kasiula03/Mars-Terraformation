@@ -1,7 +1,5 @@
-using System;
 using DG.Tweening;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public enum ConstructionType
 {
@@ -26,14 +24,9 @@ public class ConstructionPlace : MonoBehaviour
 
     public void Start()
     {
-        Quaternion rotation = _constructionHammer.localRotation;
-        _hammerSequence = DOTween.Sequence();
-        _hammerSequence.Append(_constructionHammer.DOLocalRotate(
-            new Vector3(rotation.x, rotation.y + 360f, rotation.z), 2f,
-            RotateMode.FastBeyond360).SetEase(Ease.Linear));
-        _hammerSequence.SetLoops(-1);
         StopConstruction();
 
+        //TODO: Clean it up
         if (_oceanSpot)
         {
             GetComponentInChildren<MeshRenderer>().material.color = Color.blue;
@@ -68,10 +61,16 @@ public class ConstructionPlace : MonoBehaviour
     {
         _isPlayerTriggered = true;
         _constructionHammer.gameObject.SetActive(_isPlayerTriggered);
+
+        _hammerSequence?.Kill();
+        _hammerSequence = DOTween.Sequence();
+        _hammerSequence.Append(_constructionHammer.DORotateAroundAxis(_constructionHammer.up, 360, 2f));
+        _hammerSequence.SetLoops(-1);
     }
 
     public void StopConstruction()
     {
+        _hammerSequence?.Kill();
         _isPlayerTriggered = false;
         _constructionHammer.gameObject.SetActive(_isPlayerTriggered);
     }

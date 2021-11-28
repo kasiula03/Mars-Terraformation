@@ -1,6 +1,7 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿#if UNITY_EDITOR
 
+using UnityEditor;
+using UnityEngine;
 [CustomEditor(typeof(LookAtPoint))]
 [CanEditMultipleObjects]
 public class LookAtPointEditor : Editor 
@@ -27,3 +28,5 @@ public class LookAtPointEditor : Editor
 		serializedObject.ApplyModifiedProperties();
 	}
 }
+
+#endif

@@ -19,11 +19,16 @@ public class DayNightCycle : MonoBehaviour
 
         if (CurrentTime > 1)
         {
-            Debug.Log("New Day!!");
-            CurrentTime = 0;
-            OnNewDay?.Invoke();
+            StartNewDay();
         }
 
         transform.rotation = Quaternion.Euler(CurrentTime * 360, 0, 0);
+    }
+
+    private void StartNewDay()
+    {
+        Debug.Log("New Day!!");
+        CurrentTime = 0;
+        OnNewDay?.Invoke();
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+
 
 public enum CardType
 {
@@ -8,19 +10,22 @@ public enum CardType
     ACTION,
 }
 
+
 public class Card
 {
     public CardType Type;
     public string ConfigId;
+    public List<CardAction> Actions;
 }
 
 public class CardsStorage
 {
-    public List<Card> Cards = new List<Card>()
+    public List<Card> Cards = new List<Card>();
+
+    public CardsStorage()
     {
-        new Card() {Type = CardType.EVENT}, new Card() {Type = CardType.PROJECTS}, new Card() {Type = CardType.EVENT},
-        new Card() {Type = CardType.ACTION}, new Card() {Type = CardType.PROJECTS}
-    };
+    }
+
 
     public Card GetCard(int index)
     {
@@ -30,5 +35,10 @@ public class CardsStorage
         }
 
         return Cards[index];
+    }
+
+    public void RemoveCard(int index)
+    {
+        Cards.RemoveAt(index);
     }
 }

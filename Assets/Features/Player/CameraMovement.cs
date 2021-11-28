@@ -8,7 +8,6 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     public float XSpeed = 1.5f;
-    private float _sensivity = 17f;
 
     private void FixedUpdate()
     {
